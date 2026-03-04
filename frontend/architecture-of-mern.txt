@@ -1,0 +1,16 @@
+4 layer architecture of MERN stack:
+
+UI LAYER:
+=>components
+=>pages
+
+HOOKS LAYER:=>for managing the states and api layer
+=>HOOKS
+
+state layer:=>data store
+=>auth.context.jsx
+=>ai.context.jsx
+
+API LAYER:=>for making api calls
+=>services
+    =>auth.service.js
