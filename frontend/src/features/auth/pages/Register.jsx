@@ -4,9 +4,24 @@ import {useNavigate,Link} from 'react-router'
 const Register = () => {
 
   const navigate = useNavigate()
+  const{loading,handleRegister} = useAuth()
 
-  const handleSubmit = (e)=>{
+  const[email,setEmail] = useState("")
+  const[password,setPassword] = useState("")
+  const[username,setUsername] = useState("")
+
+  const handleSubmit = async (e)=>{
       e.preventDefault();
+     await handleRegister({username,email,password})
+      navigate('/')
+    }
+
+    if(loading){
+      return(<main>
+        <h1>
+        Loading...
+        </h1>
+      </main>)
     }
 
   return (
@@ -18,17 +33,23 @@ const Register = () => {
 
           <div className="inputgroup">
             <label htmlFor="email">Username</label>
-            <input type="text" id='username' name='username' placeholder='Enter Username' />
+            <input
+              onChange={(e)=>setUsername(e.target.value)}
+              type="text" id='username' name='username' placeholder='Enter Username' />
           </div>
 
           <div className="inputgroup">
             <label htmlFor="email">Email</label>
-            <input type="email" id='email' name='email' placeholder='Enter your email' />
+            <input
+            onChange={(e)=>setEmail(e.target.value)}
+            type="email" id='email' name='email' placeholder='Enter your email' />
           </div>
 
           <div className="inputgroup">
             <label htmlFor="password">password</label>
-            <input type="password" id='password' name='password' placeholder='Enter your password' />
+            <input
+              onChange={(e)=>setPassword(e.target.value)}
+              type="password" id='password' name='password' placeholder='Enter your password' />
           </div>
 
           <button className='button primary-button'>Register</button>
