@@ -14,7 +14,7 @@ app.use(cors({
 	credentials: true
 }))
 
-// requuire all the routes here
+// require all the routes here
 const authRouter = require('./routes/auth.routes')
 
 

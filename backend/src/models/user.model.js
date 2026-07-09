@@ -17,5 +17,5 @@ const userSchema = new mongoose.Schema({
         required:true
     }
 })
-const userModel = mongoose.model("users",userSchema)
+const userModel = mongoose.model("users",userSchema) //inside the users model the userSchema will be stored
 module.exports = userModel

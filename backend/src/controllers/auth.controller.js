@@ -14,7 +14,7 @@ const registerUserController = async (req, res) => {
     const { username, email, password } = req.body
     if (!username || !email || !password) {
         return res.status(400).json({
-            messagae: "please provide username,email or password"
+            message: "please provide username,email or password"
         })
     }
     const isUserAlreadyExists = await userModel.findOne({
@@ -34,7 +34,7 @@ const registerUserController = async (req, res) => {
     })
 
     const token = jwt.sign(
-        { id: user._id, password: user.username },
+        { id: user._id, password: user.password }, 
         process.env.JWT_SECRETKEY,
         { expiresIn: "1d" }
     )
@@ -69,7 +69,7 @@ const loginUserController = async (req, res) => {
         })
     }
 
-    const isPasswordValid = bcrypt.compare(password, user.password)
+    const isPasswordValid = await bcrypt.compare(password, user.password)
     if (!isPasswordValid) {
         return res.status(400).json({
             message: "email or password is invalid"
@@ -77,7 +77,7 @@ const loginUserController = async (req, res) => {
     }
 
     const token = jwt.sign(
-        { id: user._id, password: user.username },
+        { id: user._id, password: user.password },
         process.env.JWT_SECRETKEY,
         { expiresIn: "1d" }
     )
