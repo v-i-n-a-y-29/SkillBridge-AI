@@ -2,33 +2,30 @@ import React, { useState } from 'react'
 import "../auth.form.scss"
 import { useNavigate, Link } from 'react-router'
 import { useAuth } from '../hooks/useAuth'
-const Login = () => {
 
+const Login = () => {
   const { loading, handleLogin } = useAuth()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  let error = "";
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const success = await handleLogin({ email, password })
-    if (success) {
-      error = "";
-      navigate('/');
-    } else {
-      error = "Login Failed. Please check your credentials and try again.";
-      alert(error);
-    }
+        e.preventDefault();
+        const success = await handleLogin({ email, password })
+            if (success) {
+              navigate('/');
+            } else {
+              alert("Login Failed. Please check your credentials and try again.");
+            }
   }
 
-  if (loading) {
-    return (<main>
-      <h1>
-        Loading...
-      </h1>
-    </main>)
-  }
+      if (loading) {
+        return (<main>
+          <h1>
+            Loading...
+          </h1>
+        </main>)
+      }
 
 
   return (

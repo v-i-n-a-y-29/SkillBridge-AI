@@ -1,4 +1,7 @@
 import React from 'react'
+import { useState } from 'react'
+import { useAuth } from '../hooks/useAuth'
+import "../auth.form.scss"
 import {useNavigate,Link} from 'react-router'
 
 const Register = () => {
