@@ -1,0 +1,49 @@
+# Node.js
+node_modules/
+.env
+.env.*
+dist/
+build/
+coverage/
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Vite
+.vite/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Misc
+*.local
+*.cache
+
+# Frontend build
+frontend/dist/
+frontend/.vite/
+
+# Backend build
+backend/dist/
+backend/.env
+backend/.env.*
+backend/node_modules/
+
+# Others
+*.tgz
+*.zip
+*.tar.gz
+*.bak
+*.tmp
