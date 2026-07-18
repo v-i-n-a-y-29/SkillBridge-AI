@@ -44,13 +44,16 @@ export const useAuth = () =>{
 
     const handleLogout = async () =>{
         setloading(true)
-        try {
+        try{
             await logout()
-        } catch {
-            // Optionally handle error
+            setUser(null)
         }
-        setUser(null)
-        setloading(false)
+        catch(err){
+            console.log(err)
+        }
+        finally{
+            setloading(false)
+        }
     }
 
     return {user,loading,handleLogin,handleRegister,handleLogout}

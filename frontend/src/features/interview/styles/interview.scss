@@ -1,0 +1,425 @@
+﻿// ── Design tokens ──────────────────────────────────────────────────
+$bg-page:   #0d1117;
+$bg-card:   #161b22;
+$bg-panel:  #1c2128;
+$bg-hover:  #21262d;
+$border:    #2d333b;
+$accent:    rgb(244, 71, 71);
+$accent-bg: rgba(244, 71, 71, 0.15);
+$text-pri:  #cdd9e5;
+$text-muted:#8b949e;
+$text-hint: #545d68;
+
+// ── Page ───────────────────────────────────────────────────────────
+.iv {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: $bg-page;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+
+  // ── 3-column layout ─────────────────────────────────────────────
+  &__layout {
+    width: 100%;
+    max-width: 1280px;
+    display: grid;
+    grid-template-columns: 210px 1fr 230px;
+    background: $bg-card;
+  }
+
+  // ── Left sidebar ─────────────────────────────────────────────────
+  &__sidebar {
+    border-right: 1px solid $border;
+    padding: 1.75rem 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    overflow: hidden;
+  }
+
+  &__sections-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: $text-hint;
+    text-transform: uppercase;
+    padding: 0 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    padding: 0 0.6rem;
+  }
+
+  &__nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.55rem 0.75rem;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: $text-muted;
+    font-size: 0.82rem;
+    font-weight: 500;
+    border-radius: 0.45rem;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    transition: background 0.15s, color 0.15s;
+
+    &:hover {
+      background: $bg-hover;
+      color: $text-pri;
+    }
+
+    &--active {
+      background: $accent-bg;
+      color: $accent;
+      font-weight: 600;
+
+      .iv__nav-icon { color: $accent; }
+    }
+  }
+
+  &__nav-icon {
+    display: flex;
+    align-items: center;
+    color: $text-hint;
+    flex-shrink: 0;
+  }
+
+  // ── Center ───────────────────────────────────────────────────────
+  &__main {
+    padding: 1.75rem 1.75rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: $border transparent;
+
+    &::-webkit-scrollbar       { width: 4px; }
+    &::-webkit-scrollbar-track { background: transparent; }
+    &::-webkit-scrollbar-thumb { background: $border; border-radius: 4px; }
+  }
+
+  &__content-hdr {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  &__content-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: $text-pri;
+  }
+
+  &__count-badge {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: $text-muted;
+    background: $bg-panel;
+    border: 1px solid $border;
+    padding: 0.2em 0.65em;
+    border-radius: 999px;
+  }
+
+  &__qlist {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  // ── Right sidebar ─────────────────────────────────────────────────
+  &__right {
+    border-left: 1px solid $border;
+    padding: 1.75rem 1.25rem;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: $border transparent;
+  }
+
+  &__right-label {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: $text-hint;
+    text-transform: uppercase;
+    margin-bottom: 0.85rem;
+
+    &--gap {
+      margin-top: 1.5rem;
+      margin-bottom: 0.65rem;
+    }
+  }
+
+  // ── Score ring (conic-gradient) ───────────────────────────────────
+  &__score-ring {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: conic-gradient(
+      var(--score-color) var(--score-pct),
+      #2d333b 0
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 0.75rem;
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 6px;
+      background: $bg-card;
+      border-radius: 50%;
+    }
+  }
+
+  &__score-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: baseline;
+    gap: 1px;
+  }
+
+  &__score-num {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: $text-pri;
+    line-height: 1;
+  }
+
+  &__score-pct {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: $text-muted;
+  }
+
+  &__score-desc {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 0.25rem;
+  }
+
+  // ── Skill gaps ────────────────────────────────────────────────────
+  &__gaps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  &__gap-tag {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.4em 0.75em;
+    border-radius: 0.35rem;
+    line-height: 1.4;
+
+    &--high {
+      background: rgba(244, 71, 71, 0.18);
+      color: rgb(249, 128, 128);
+    }
+
+    &--medium {
+      background: rgba(234, 179, 8, 0.18);
+      color: rgb(250, 204, 21);
+    }
+
+    &--low {
+      background: rgba(34, 197, 94, 0.15);
+      color: rgb(74, 222, 128);
+    }
+  }
+}
+
+// ── Question card ──────────────────────────────────────────────────
+.qc {
+  background: $bg-panel;
+  border: 1px solid $border;
+  border-radius: 0.55rem;
+  overflow: hidden;
+  transition: border-color 0.2s;
+
+  &--open {
+    border-color: rgba(244, 71, 71, 0.3);
+  }
+
+  &__toggle {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.9rem 1rem;
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.15s;
+
+    &:hover { background: $bg-hover; }
+  }
+
+  &__num {
+    flex-shrink: 0;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: $text-hint;
+    margin-top: 0.15rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  &__question {
+    flex: 1;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: $text-pri;
+    line-height: 1.55;
+  }
+
+  &__chevron {
+    flex-shrink: 0;
+    color: $text-hint;
+    margin-top: 0.2rem;
+  }
+
+  &__body {
+    padding: 0 1rem 1rem 1rem;
+    border-top: 1px solid $border;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding-top: 0.85rem;
+  }
+
+  &__pill {
+    display: inline-block;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    padding: 0.2em 0.6em;
+    border-radius: 0.25rem;
+    text-transform: uppercase;
+    margin-top: 0.35rem;
+    margin-bottom: 0.1rem;
+
+    &--intention {
+      background: rgba(34, 197, 94, 0.15);
+      color: rgb(74, 222, 128);
+    }
+
+    &--answer {
+      background: rgba(234, 179, 8, 0.15);
+      color: rgb(250, 204, 21);
+    }
+  }
+
+  &__text {
+    font-size: 0.835rem;
+    color: $text-muted;
+    line-height: 1.65;
+  }
+}
+
+// ── Road map timeline ──────────────────────────────────────────────
+.timeline {
+  position: relative;
+  padding-left: 1.75rem;
+
+  // vertical track line
+  &::before {
+    content: "";
+    position: absolute;
+    left: 7px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: $border;
+  }
+
+  &__item {
+    position: relative;
+    padding-bottom: 1.75rem;
+
+    &:last-child { padding-bottom: 0; }
+  }
+
+  &__dot {
+    position: absolute;
+    left: -1.75rem;
+    top: 6px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: $accent;
+    border: 2px solid $bg-card;
+    box-shadow: 0 0 0 2px $accent;
+    flex-shrink: 0;
+  }
+
+  &__content { display: flex; flex-direction: column; gap: 0.45rem; }
+
+  &__heading {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  &__day {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: $accent;
+    background: rgba(244, 71, 71, 0.12);
+    border: 1px solid rgba(244, 71, 71, 0.25);
+    padding: 0.15em 0.55em;
+    border-radius: 0.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+
+  &__focus {
+    font-size: 0.925rem;
+    font-weight: 700;
+    color: $text-pri;
+  }
+
+  &__tasks {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+
+    li {
+      font-size: 0.835rem;
+      color: $text-muted;
+      line-height: 1.6;
+      padding-left: 1rem;
+      position: relative;
+
+      &::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: $accent;
+        font-weight: 700;
+      }
+    }
+  }
+}

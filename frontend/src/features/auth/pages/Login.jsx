@@ -9,7 +9,8 @@ const Login = () => {
   const [password, setPassword] = useState("")
   const navigate = useNavigate()
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => 
+  {
         e.preventDefault();
         const success = await handleLogin({ email, password })
             if (success) {
