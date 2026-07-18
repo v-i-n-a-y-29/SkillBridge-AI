@@ -2,6 +2,7 @@
 node_modules/
 .env
 .env.*
+!.env.example
 dist/
 build/
 coverage/
@@ -39,6 +40,7 @@ frontend/.vite/
 backend/dist/
 backend/.env
 backend/.env.*
+!backend/.env.example
 backend/node_modules/
 
 # Others
