@@ -1,4 +1,4 @@
-# Interview AI
+# SkillBridge-AI
 
 Interview AI is a full-stack web application that helps students prepare for interviews using AI-powered guidance, document-aware context, and personalized preparation workflows.
 
