@@ -39,7 +39,13 @@ const registerUserController = async (req, res) => {
         { expiresIn: "1d" }
     )
 
-    res.cookie("token", token)
+    const cookieOptions = {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none'
+    }
+
+    res.cookie("token", token, cookieOptions)
 
     res.status(201).json({
         message: "user created successfully",
@@ -82,8 +88,13 @@ const loginUserController = async (req, res) => {
         { expiresIn: "1d" }
     )
 
+    const cookieOptions = {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none'
+    }
 
-    res.cookie("token", token)
+    res.cookie("token", token, cookieOptions)
 
     res.status(200).json({
         message: "user logged in successfully",
@@ -112,7 +123,12 @@ const logoutUserController = async (req, res) => {
             })
         }
     }
-    res.clearCookie("token")
+    const cookieOptions = {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none'
+    }
+    res.clearCookie("token", cookieOptions)
     res.status(200).json({
         message: "user logged out successfully"
     })
