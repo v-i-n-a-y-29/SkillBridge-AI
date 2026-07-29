@@ -5,7 +5,9 @@ const connectToDb = require('./src/config/database')
 connectToDb()
 
 
-app.listen(3000,()=>{
-    console.log("the server is runnin on port 3000")
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    console.log(`The server is running on port ${PORT}`);
 })
 

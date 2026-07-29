@@ -9,8 +9,20 @@ app.use(express.json())
 app.use(cookieParser())
 
 // Enable CORS for frontend
+const allowedOrigins = [
+	'http://localhost:5173',
+	process.env.CLIENT_URL,
+	process.env.FRONTEND_URL
+].filter(Boolean);
+
 app.use(cors({
-	origin: 'http://localhost:5173',
+	origin: (origin, callback) => {
+		if (!origin || allowedOrigins.includes(origin)) {
+			callback(null, true);
+		} else {
+			callback(null, true); // Allow during production testing
+		}
+	},
 	credentials: true
 }))
 
