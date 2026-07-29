@@ -88,7 +88,7 @@ async function getAllInterviewReportsController(req , res) {
 
         const userId = req.data.id
 
-        const Reports = await interviewReportModel.find({user:userId}).sort({createdAt:-1}).select('title')
+        const Reports = await interviewReportModel.find({user:userId}).sort({createdAt:-1}).select('title matchScore createdAt')
 
         return res.status(200).json({
              success:true,

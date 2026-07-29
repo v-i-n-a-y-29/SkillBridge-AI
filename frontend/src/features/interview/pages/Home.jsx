@@ -1,11 +1,39 @@
-import React from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import '../styles/home.scss'
-import { FiUploadCloud } from 'react-icons/fi'
+import { FiUploadCloud, FiLogOut } from 'react-icons/fi'
 import { BsInfoCircleFill } from 'react-icons/bs'
+import { useInterview } from '../hooks/useInterview'
+import { useAuth } from '../../auth/hooks/useAuth'
+import { useNavigate } from 'react-router'
 
-function Home() {
+const Home = () => {
+  const navigate = useNavigate()
+  const { handleLogout } = useAuth()
+  const { loading, reports, generateReport, getAllReports } = useInterview()
+  const [jobDescription, setJobDescription] = useState("")
+  const [selfDescription, setSelfDescription] = useState("")
+  const resumeInputRef = useRef()
+
+  useEffect(() => {
+    getAllReports()
+  }, [])
+
+  const handleGenerateReport = async () => {
+    const resumeFile = resumeInputRef.current?.files?.[0]
+    const data = await generateReport({ jobDescription, selfDescription, resumeFile })
+    if (data?._id) {
+      navigate(`/interview/${data._id}`)
+    }
+  }
+
   return (
     <main className="home">
+      {/* ── Top Bar / Header ── */}
+      <div className="home__topbar">
+        <button className="home__logout-btn" onClick={handleLogout}>
+          <FiLogOut size={16} /> Logout
+        </button>
+      </div>
 
       {/* ── Page header ── */}
       <header className="home__header">
@@ -17,7 +45,6 @@ function Home() {
 
       {/* ── Main card ── */}
       <section className="home__card">
-
         {/* Left panel — Job Opportunity */}
         <div className="home__panel home__panel--left">
           <h2 className="panel__title">Job Opportunity</h2>
@@ -27,10 +54,12 @@ function Home() {
             id="jobDescription"
             name="jobDescription"
             placeholder={`Paste the full job description here... e.g., "Senior Frontend Engineer at Google requires proficiency in React, TypeScript, and large-scale system design..."`}
-            maxLength={5000}
+            maxLength={500000}
+            value={jobDescription}
+            onChange={(e) => setJobDescription(e.target.value)}
           />
 
-          <p className="panel__char-count">0 / 5000 chars</p>
+          {/* <p className="panel__char-count">{jobDescription.length} / 500000 chars</p> */}
         </div>
 
         {/* Divider */}
@@ -43,7 +72,7 @@ function Home() {
           {/* Upload zone */}
           <label className="upload-zone" htmlFor="resume">
             <FiUploadCloud className="upload-zone__icon" size={28} />
-            <span className="upload-zone__primary">Click to upload or drag &amp; drop</span>
+            <span className="upload-zone__primary">Click to upload </span>
             <span className="upload-zone__secondary">PDF or DOCX (Max 3MB)</span>
             <input
               hidden
@@ -51,6 +80,7 @@ function Home() {
               id="resume"
               name="resume"
               accept="application/pdf,.docx"
+              ref={resumeInputRef}
             />
           </label>
 
@@ -71,6 +101,7 @@ function Home() {
               id="selfDescription"
               name="selfDescription"
               placeholder="Briefly describe your experience, key skills, and years of experience if you don't have a resume handy..."
+              onChange={(e) => setSelfDescription(e.target.value)}
             />
           </div>
 
@@ -83,17 +114,46 @@ function Home() {
           </div>
 
           {/* CTA — inside right panel */}
-          <button className="home__cta" id="generateStrategy">
-            Generate Strategy
+          <button
+            className="home__cta"
+            id="generateStrategy"
+            onClick={handleGenerateReport}
+            disabled={loading}
+          >
+            {loading ? "Generating Strategy..." : "★ Generate My Interview Strategy"}
           </button>
           <p className="home__cta-hint">AI-Powered Strategy Generation · Approx 30s</p>
         </div>
-
       </section>
 
+      {/* ── Recent Interview Plans ── */}
+      {reports && reports.length > 0 && (
+        <section className="home__recent">
+          <h2 className="home__recent-title">My Recent Interview Plans</h2>
+          <div className="home__recent-grid">
+            {reports.map((item) => (
+              <div
+                key={item._id}
+                className="recent-card"
+                onClick={() => navigate(`/interview/${item._id}`)}
+              >
+                <h3 className="recent-card__title">{item.title}</h3>
+                <p className="recent-card__date">
+                  Generated on {item.createdAt ? new Date(item.createdAt).toLocaleDateString() : 'N/A'}
+                </p>
+                {item.matchScore !== undefined && (
+                  <p className="recent-card__score">
+                    Match Score: <span className="recent-card__score-val">{item.matchScore}%</span>
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
     </main>
   )
 }
 
 export default Home
-
+

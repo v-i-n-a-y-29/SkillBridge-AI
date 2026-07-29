@@ -30,7 +30,7 @@ export const generateInterviewReport = async ({jobDescription , selfDescription 
     catch(err)
     {
          console.log(err)
-         return err
+         throw err
     }
 }
 
@@ -41,7 +41,7 @@ export const generateInterviewReport = async ({jobDescription , selfDescription 
  *  @access Private 
  *  @route GET /api/interview/report/:interviewId
  */
-export const getInterviewReportById = async ({interviewId}) => {
+export const getInterviewReportById = async (interviewId) => {
 
      try {
           const response = await api.get(`/report/${interviewId}`)
@@ -50,7 +50,7 @@ export const getInterviewReportById = async ({interviewId}) => {
      catch(err)
      {
           console.log(err)
-          return err
+          throw err
      }
 }
 
@@ -69,7 +69,7 @@ export const getAllInterviewReports = async () => {
      catch(err)
      {
           console.log(err)
-          return err
+          throw err
      }
 }
 

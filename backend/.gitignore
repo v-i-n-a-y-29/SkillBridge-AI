@@ -37,7 +37,6 @@ frontend/.vite/
 # Backend build
 backend/dist/
 backend/.env
-backend/.env.*
 !backend/.env.example
 backend/node_modules/
 

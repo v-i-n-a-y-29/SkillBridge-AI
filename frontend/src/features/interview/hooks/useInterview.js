@@ -65,7 +65,7 @@ export const useInterview = () => {
         try{
              response = await getAllInterviewReports()
 
-            setReports(response.report)
+            setReports(response.reports)
         }
         catch(error){
             console.log(error)
@@ -74,7 +74,7 @@ export const useInterview = () => {
             setLoading(false)
         }
 
-        return response.report
+        return response?.reports
     }
 
 
