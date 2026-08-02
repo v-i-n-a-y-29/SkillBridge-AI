@@ -35,5 +35,9 @@ const interviewRouter = require('./routes/interview.routes')
 app.use('/api/auth',authRouter)
 app.use('/api/interview',interviewRouter)
 
+app.get('/api/health',(req,res)=>{
+    return res.status(200).json({message:'OK'})
+})
+
 
 module.exports = app
